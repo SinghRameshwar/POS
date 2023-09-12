@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { SaleScreen } from "./src/salescreen/ComponentContainer/SaleScreen";
 import { useEffect } from "react";
 import StoreDB from "./src/Storages/StoreDB";
+import RootstackNavigation from "./src/navigatorGrp/RootstackNavigation";
 
 export default function App() {
 
@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <SaleScreen />
+      <RootstackNavigation/>
       <StatusBar style="auto" />
     </View>
   );

@@ -1,0 +1,46 @@
+{
+    "cli": {
+      "version": ">= 3.4.1"
+    },
+    "build": {
+      "development": {
+        "developmentClient": true,
+        "distribution": "internal",
+        "ios": {
+          "resourceClass": "m1-medium"
+        }
+      },
+      "preview": {
+        "distribution": "internal",
+        "android": {
+          "buildType": "apk"
+        },
+        "ios": {
+          "resourceClass": "m1-medium"
+        }
+      },
+      "preview2": {
+        "android": {
+          "gradleCommand": ":app:assembleRelease"
+        }
+      },
+      "preview3": {
+        "developmentClient": true
+      },
+      "production": {
+        "ios": {
+          "resourceClass": "m1-medium"
+        }
+      }
+    },
+    "submit": {
+      "production": {
+        "ios":{
+          "appleId":"rameshwariise49@gmail.com",
+          "ascAppId":"1156121187",
+          "appleTeamId":"55PL9P9V5P"
+        }
+      }
+    }
+  }
+  

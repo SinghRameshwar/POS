@@ -1,31 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ItemListComp } from "../component/ItemListComp";
 import { colors } from "../../colors";
 import { BarCodeScannerComp } from "../../Helpers/BarCodeScannerComp";
-import { itemInsert } from "../../Storages/insertQuery";
+import { getScannedItem } from "../data/getScannedItem";
+import * as XLSX from "xlsx";
+import * as DocumentPicker from "expo-document-picker";
 
-export const SaleScreen = () => {
-  const insertItem = async () => {
-    let item_list_ObjAr = {
-      item_id: "",
-      item_name: "",
-      p_price: 0,
-      s_price: 0,
-      qty: 10,
-    };
+export const SaleScreen = ({ route, navigation }) => {
+  const [itemsList, setItemList] = useState([]);
+  const [isScan, setisScan] = useState(false);
 
-    for (let i = 0; i < 20; i++) {
-      item_list_ObjAr.item_name = "";
-      item_list_ObjAr.p_price = 2 * i;
-      item_list_ObjAr.s_price = 3 * i;
-      await itemInsert(item_list_ObjAr).then((resp) => {
-        console.log("--------", resp);
-      });
-    }
+  // Call Back Function
+  const scannedItemCodeId = (type, codeId) => {
+    getScannedItem(codeId).then((result) => {
+      if (result == "No Item in stock!" || result == undefined) {
+        alert(result);
+      } else {
+        setItemList([...itemsList, result]);
+      }
+    });
   };
 
-  useEffect(() => {}, []);
+  const chooseFile = async ($event) => {
+    let result = await DocumentPicker.getDocumentAsync({});
+    alert(result.assets[0].uri);
+    console.log(result);
+  };
 
   return (
     <View style={styles.container}>
@@ -39,23 +40,62 @@ export const SaleScreen = () => {
           borderRadius: 10,
           alignItems: "center",
         }}
-        onPress={() => insertItem()}
+        onPress={() => navigation.navigate("compslt")}
       >
         <Text>Insert New Item </Text>
       </TouchableOpacity>
 
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View
-          style={{ padding: 8, backgroundColor: colors.primary, flex: 1.2 }}
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
+      >
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: "grey",
+            width: 140,
+            borderRadius: 10,
+            alignItems: "center",
+            marginRight: 20,
+          }}
+          onPress={() => chooseFile()}
         >
-          <ItemListComp />
-        </View>
+          <Text>Choose File </Text>
+        </TouchableOpacity>
 
-        <BarCodeScannerComp />
+        <Text>No file chosen </Text>
+      </View>
 
-        <View style={{ padding: 8, backgroundColor: "white", flex: 0.8 }}>
-          <ItemListComp />
-        </View>
+      <TouchableOpacity
+        style={{
+          marginBottom: 20,
+          padding: 10,
+          backgroundColor: "grey",
+          width: 140,
+          borderRadius: 10,
+          alignItems: "center",
+        }}
+        onPress={() => setisScan(true)}
+      >
+        <Text>Scane Barcode</Text>
+      </TouchableOpacity>
+
+      <View style={{ padding: 8, backgroundColor: colors.primary, flex: 1.2 }}>
+        <ItemListComp itemList={itemsList} />
+      </View>
+
+      <View
+        style={{
+          position: "absolute",
+          width: "70%",
+          height: "70%",
+          alignSelf: "center",
+          display: isScan ? "flex" : "none",
+        }}
+      >
+        <BarCodeScannerComp
+          scannedItemCodeId={scannedItemCodeId}
+          setisScan={setisScan}
+        />
       </View>
     </View>
   );
