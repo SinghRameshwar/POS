@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.singh.pos"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +28,14 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "99889adb-f341-4075-bfa0-368e918c5a79"

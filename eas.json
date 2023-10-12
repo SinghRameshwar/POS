@@ -32,15 +32,6 @@
           "resourceClass": "m1-medium"
         }
       }
-    },
-    "submit": {
-      "production": {
-        "ios":{
-          "appleId":"rameshwariise49@gmail.com",
-          "ascAppId":"1156121187",
-          "appleTeamId":"55PL9P9V5P"
-        }
-      }
     }
   }
   

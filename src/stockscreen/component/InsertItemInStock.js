@@ -10,8 +10,9 @@ import {
 import { itemInsert } from "../../Storages/insertQuery";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { BarCodeScannerComp } from "../../Helpers/BarCodeScannerComp";
+import NavigNewStock from "./NavigNewStock";
 
-export const InsertItemInStock = () => {
+export default InsertItemInStock = ({ route, navigation }) => {
   const [itemId, setitemId] = useState("");
   const [itemName, setitemName] = useState("");
   const [itemPurchase, setitemPurchase] = useState("");
@@ -61,12 +62,16 @@ export const InsertItemInStock = () => {
   };
 
   const scannedItemCodeId = (type, codeId) => {
-    setitemId(codeId)
+    setitemId(codeId);
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <NavigNewStock navig={navigation} titleName="New Stock" />
+      <ScrollView
+        style={{ padding: 16, paddingTop: "10%" }}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={{ color: "grey", marginTop: 10 }}>Item Id/Code</Text>
         <View style={{ flexDirection: "row" }}>
           <TextInput
@@ -207,15 +212,18 @@ export const InsertItemInStock = () => {
       <View
         style={{
           position: "absolute",
+          marginTop: "30%",
           width: "70%",
           height: "70%",
+          backgroundColor: "#ffffff",
+          borderRadius: 10,
           alignSelf: "center",
           display: isScan ? "flex" : "none",
         }}
       >
         <BarCodeScannerComp
           scannedItemCodeId={scannedItemCodeId}
-          setisScan = {setisScan}
+          setisScan={setisScan}
         />
       </View>
     </View>
@@ -226,7 +234,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 16,
-    paddingTop: "25%",
   },
 });

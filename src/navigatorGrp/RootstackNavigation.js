@@ -1,19 +1,18 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SaleScreen } from '../salescreen/ComponentContainer/SaleScreen';
-import { InsertItemInStock } from '../stockscreen/component/InsertItemInStock';
+import OTPLogin from "../Login/OTPLogin";
+import NavigationDrawer from "./NavigationDrawer";
 
 const Stack  = createNativeStackNavigator();
 
-export default RootstackNavigation = () =>{
-
+export default RootstackNavigation = ({loginType, navigation}) =>{
 
     return (
         <NavigationContainer independent={true}>
-          <Stack.Navigator initialRouteName = "login">
-            <Stack.Screen name="login" component={SaleScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="compslt" component={InsertItemInStock} options={{ headerShown: false }} />
+          <Stack.Navigator initialRouteName = {loginType}>
+            <Stack.Screen name="login" component={OTPLogin} options={{ headerShown: false }} />
+            <Stack.Screen name="NavigationDrawer" component={NavigationDrawer} options={{ headerShown: false }} initialParams={{ navig: navigation }} />
           </Stack.Navigator>
         </NavigationContainer>
       );
