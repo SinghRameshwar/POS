@@ -4,10 +4,9 @@ import { ItemListComp } from "../component/ItemListComp";
 import { colors } from "../../colors";
 import { BarCodeScannerComp } from "../../Helpers/BarCodeScannerComp";
 import { getScannedItem } from "../data/getScannedItem";
-import * as XLSX from "xlsx";
-import * as DocumentPicker from "expo-document-picker";
+import NavigSaleItem from "../component/NavigSaleItem";
 
-export const SaleScreen = ({ route, navigation }) => {
+export default SaleScreen = ({ route, navigation }) => {
   const [itemsList, setItemList] = useState([]);
   const [isScan, setisScan] = useState(false);
 
@@ -22,72 +21,27 @@ export const SaleScreen = ({ route, navigation }) => {
     });
   };
 
-  const chooseFile = async ($event) => {
-    let result = await DocumentPicker.getDocumentAsync({});
-    alert(result.assets[0].uri);
-    console.log(result);
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={{
-          marginTop: 50,
-          marginBottom: 20,
-          padding: 10,
-          backgroundColor: "grey",
-          width: 140,
-          borderRadius: 10,
-          alignItems: "center",
-        }}
-        onPress={() => navigation.navigate("compslt")}
-      >
-        <Text>Insert New Item </Text>
-      </TouchableOpacity>
+      <NavigSaleItem
+        navig={navigation}
+        titleName="Items Sale"
+        setisScan={setisScan}
+        isScan={isScan}
+      />
 
-      <View
-        style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
-      >
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: "grey",
-            width: 140,
-            borderRadius: 10,
-            alignItems: "center",
-            marginRight: 20,
-          }}
-          onPress={() => chooseFile()}
-        >
-          <Text>Choose File </Text>
-        </TouchableOpacity>
-
-        <Text>No file chosen </Text>
-      </View>
-
-      <TouchableOpacity
-        style={{
-          marginBottom: 20,
-          padding: 10,
-          backgroundColor: "grey",
-          width: 140,
-          borderRadius: 10,
-          alignItems: "center",
-        }}
-        onPress={() => setisScan(true)}
-      >
-        <Text>Scane Barcode</Text>
-      </TouchableOpacity>
-
-      <View style={{ padding: 8, backgroundColor: colors.primary, flex: 1.2 }}>
+      <View style={{ padding: 8, backgroundColor: colors.primary, flex: 1 }}>
         <ItemListComp itemList={itemsList} />
       </View>
 
       <View
         style={{
           position: "absolute",
+          marginTop:"30%",
           width: "70%",
           height: "70%",
+          backgroundColor:"#ffffff",
+          borderRadius:10,
           alignSelf: "center",
           display: isScan ? "flex" : "none",
         }}
@@ -105,6 +59,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 16,
   },
 });
