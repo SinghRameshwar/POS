@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { itemInsert } from "../../Storages/insertQuery";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { BarCodeScannerComp } from "../../Helpers/BarCodeScannerComp";
 import NavigNewStock from "./NavigNewStock";
 
 export default InsertItemInStock = ({ route, navigation }) => {
@@ -19,7 +18,6 @@ export default InsertItemInStock = ({ route, navigation }) => {
   const [itemSale, setitemSale] = useState("");
   const [itemQty, setitemQty] = useState("");
   const ref_input1 = useRef();
-  const [isScan, setisScan] = useState(false);
 
   const goBackwithDataMethod = async () => {
     if (itemId == undefined || itemId == "") {
@@ -65,6 +63,15 @@ export default InsertItemInStock = ({ route, navigation }) => {
     setitemId(codeId);
   };
 
+  useEffect(() => {
+    const focusHandler = navigation.addListener("focus", () => {
+      if (route.params.barCodeDetails != undefined) {
+        scannedItemCodeId("1", route.params.barCodeDetails.data)
+      }
+    });
+    return focusHandler;
+  });
+
   return (
     <View style={styles.container}>
       <NavigNewStock navig={navigation} titleName="New Stock" />
@@ -93,7 +100,11 @@ export default InsertItemInStock = ({ route, navigation }) => {
           />
 
           <Icon
-            onPress={() => setisScan(true)}
+            onPress={() =>
+              navigation.navigate("BarCodeScannerComp", {
+                navTypeComp: "InsertItemInStock",
+              })
+            }
             style={{
               textAlign: "center",
               marginLeft: 8,
@@ -209,23 +220,6 @@ export default InsertItemInStock = ({ route, navigation }) => {
           </Text>
         </TouchableOpacity>
       </ScrollView>
-      <View
-        style={{
-          position: "absolute",
-          marginTop: "30%",
-          width: "70%",
-          height: "70%",
-          backgroundColor: "#ffffff",
-          borderRadius: 10,
-          alignSelf: "center",
-          display: isScan ? "flex" : "none",
-        }}
-      >
-        <BarCodeScannerComp
-          scannedItemCodeId={scannedItemCodeId}
-          setisScan={setisScan}
-        />
-      </View>
     </View>
   );
 };
@@ -233,6 +227,6 @@ export default InsertItemInStock = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f0f5f5",
   },
 });

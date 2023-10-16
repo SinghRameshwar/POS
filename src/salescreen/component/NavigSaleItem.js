@@ -25,7 +25,7 @@ export default class NavigSaleItem extends React.Component {
           <View style={{ flex: 1, alignItems: "flex-end", paddingRight: 10 }}>
             {/*Donute Button Image */}
             <Icon
-              onPress={()=> this.props.setisScan(this.props.isScan ? false : true)}
+              onPress={()=> this.props.navig.navigate("BarCodeScannerComp", {navTypeComp: "SaleScreen"})}
               style={{ textAlign: "right" }}
               name="barcode"
               size={50}
