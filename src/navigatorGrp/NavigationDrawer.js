@@ -12,6 +12,7 @@ import CustomSidebarMenu from "./Component/CustomSidebarMenu";
 import SaleScreen from "../salescreen/ComponentContainer/SaleScreen";
 import InsertItemInStock from "../stockscreen/component/InsertItemInStock";
 import FileUpload from "../ExcelUpload/component/FileUpload";
+import BarCodeScannerComp from "../Helpers/BarCodeScannerComp";
 
 /* ------------- Setting Menu Items -----------*/
 import AboutApp from "../AppSettingV/Components/AboutApp";
@@ -30,6 +31,7 @@ function FirstScreenStack({ navigation }) {
         name="Dashboard"
         component={Dashboard}
         options={{ headerShown: false }}
+        initialParams = {{ "navig": "" }}
       />
       {/* <Stack.Screen
         name="CompChangeView"
@@ -39,6 +41,43 @@ function FirstScreenStack({ navigation }) {
     </Stack.Navigator>
   );
 }
+
+function SaleItemScreenStack({ navigation }) {
+  return (
+    <Stack.Navigator initialRouteName="SaleScreen">
+      <Stack.Screen
+        name="SaleScreen"
+        component={SaleScreen}
+        options={{ headerShown: false }}
+        initialParams = {{ "navig": "" }}
+      />
+      <Stack.Screen
+        name="BarCodeScannerComp"
+        component={BarCodeScannerComp}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function NewStockScreenStack({ navigation }) {
+  return (
+    <Stack.Navigator initialRouteName="InsertItemInStock">
+      <Stack.Screen
+        name="InsertItemInStock"
+        component={InsertItemInStock}
+        options={{ headerShown: false }}
+        initialParams = {{ "navig": "" }}
+      />
+      <Stack.Screen
+        name="BarCodeScannerComp"
+        component={BarCodeScannerComp}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 
 function NavigationDrawer({ route, navigation }) {
   return (
@@ -77,7 +116,7 @@ function NavigationDrawer({ route, navigation }) {
               />
             ),
           }}
-          component={SaleScreen}
+          component={SaleItemScreenStack}
         />
 
         <Drawer.Screen
@@ -92,7 +131,7 @@ function NavigationDrawer({ route, navigation }) {
               />
             ),
           }}
-          component={InsertItemInStock}
+          component={NewStockScreenStack}
         />
 
         <Drawer.Screen
@@ -157,7 +196,7 @@ function NavigationDrawer({ route, navigation }) {
             ),
           }}
           component={LogOutModel}
-          initialParams={{ navig: navigation }}
+          initialParams={{ "navig": "" }}
         />
       </Drawer.Navigator>
     </NavigationContainer>

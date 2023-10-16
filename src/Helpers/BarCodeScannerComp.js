@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
-export const BarCodeScannerComp = ({ scannedItemCodeId, setisScan }) => {
+export default BarCodeScannerComp = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(true);
+  const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -16,9 +16,11 @@ export const BarCodeScannerComp = ({ scannedItemCodeId, setisScan }) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    // Call Back Function
-    setisScan(false);
-    scannedItemCodeId(type, data);
+    navigation.navigate(route.params.navTypeComp, {
+      barCodeDetails: { type: type, data: data },
+    });
+
+    //navigation.goBack(null);
     //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
@@ -43,7 +45,7 @@ export const BarCodeScannerComp = ({ scannedItemCodeId, setisScan }) => {
           />
         )}
       </View>
-      <Button title={"Stop Scanning"} onPress={() => setisScan(false)} />
+      <Button title={"Stop Scanning"} onPress={() => navigation.goBack(null)} />
     </View>
   );
 };
