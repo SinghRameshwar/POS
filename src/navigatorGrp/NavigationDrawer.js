@@ -13,6 +13,7 @@ import SaleScreen from "../salescreen/ComponentContainer/SaleScreen";
 import InsertItemInStock from "../stockscreen/component/InsertItemInStock";
 import FileUpload from "../ExcelUpload/component/FileUpload";
 import BarCodeScannerComp from "../Helpers/BarCodeScannerComp";
+import { StockList } from "../stockscreen/component/StockList";
 
 /* ------------- Setting Menu Items -----------*/
 import AboutApp from "../AppSettingV/Components/AboutApp";
@@ -31,7 +32,7 @@ function FirstScreenStack({ navigation }) {
         name="Dashboard"
         component={Dashboard}
         options={{ headerShown: false }}
-        initialParams = {{ "navig": "" }}
+        initialParams={{ navig: "" }}
       />
       {/* <Stack.Screen
         name="CompChangeView"
@@ -49,7 +50,7 @@ function SaleItemScreenStack({ navigation }) {
         name="SaleScreen"
         component={SaleScreen}
         options={{ headerShown: false }}
-        initialParams = {{ "navig": "" }}
+        initialParams={{ navig: "" }}
       />
       <Stack.Screen
         name="BarCodeScannerComp"
@@ -67,7 +68,7 @@ function NewStockScreenStack({ navigation }) {
         name="InsertItemInStock"
         component={InsertItemInStock}
         options={{ headerShown: false }}
-        initialParams = {{ "navig": "" }}
+        initialParams={{ navig: "" }}
       />
       <Stack.Screen
         name="BarCodeScannerComp"
@@ -77,7 +78,6 @@ function NewStockScreenStack({ navigation }) {
     </Stack.Navigator>
   );
 }
-
 
 function NavigationDrawer({ route, navigation }) {
   return (
@@ -132,6 +132,21 @@ function NavigationDrawer({ route, navigation }) {
             ),
           }}
           component={NewStockScreenStack}
+        />
+
+        <Drawer.Screen
+          name="StockList"
+          options={{
+            drawerLabel: "Stock List",
+            headerShown: false,
+            drawerIcon: ({ focused, size }) => (
+              <Image
+                style={styles.image}
+                source={require("../../assets/home.png")}
+              />
+            ),
+          }}
+          component={StockList}
         />
 
         <Drawer.Screen
@@ -196,7 +211,7 @@ function NavigationDrawer({ route, navigation }) {
             ),
           }}
           component={LogOutModel}
-          initialParams={{ "navig": "" }}
+          initialParams={{ navig: "" }}
         />
       </Drawer.Navigator>
     </NavigationContainer>
